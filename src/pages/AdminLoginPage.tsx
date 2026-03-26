@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -15,7 +14,7 @@ export default function AdminLoginPage() {
     setError(null)
     setLoading(true)
 
-    const { error: signInError } = await signIn(email, password)
+    const { error: signInError } = await signIn(password)
 
     if (signInError) {
       setError(signInError)
@@ -43,25 +42,6 @@ export default function AdminLoginPage() {
         >
           <div>
             <label
-              htmlFor="email"
-              className="block text-sm font-medium text-[var(--color-navy)] mb-1.5"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-              className="w-full px-4 py-2.5 text-sm border border-[var(--color-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 focus:border-[var(--color-primary)]"
-              placeholder="you@cubicship.com"
-            />
-          </div>
-
-          <div>
-            <label
               htmlFor="password"
               className="block text-sm font-medium text-[var(--color-navy)] mb-1.5"
             >
@@ -75,7 +55,7 @@ export default function AdminLoginPage() {
               required
               autoComplete="current-password"
               className="w-full px-4 py-2.5 text-sm border border-[var(--color-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 focus:border-[var(--color-primary)]"
-              placeholder="Enter your password"
+              placeholder="Enter admin password"
             />
           </div>
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowLeft, ArrowRight, Send } from 'lucide-react'
 import type { RefundFormData } from '../../lib/types'
-import { supabase } from '../../lib/supabase'
+import { createRefundRequest } from '../../lib/api'
 import FormProgressBar from './FormProgressBar'
 import StepCustomerInfo from './StepCustomerInfo'
 import StepShipmentDetails from './StepShipmentDetails'
@@ -98,7 +98,7 @@ export default function RefundForm() {
     setSubmitError(null)
 
     try {
-      const { error } = await supabase.from('refund_requests').insert({
+      await createRefundRequest({
         customer_name: formData.customer_name.trim(),
         customer_email: formData.customer_email.trim(),
         customer_phone: formData.customer_phone.trim(),
@@ -110,7 +110,6 @@ export default function RefundForm() {
         customer_contacted: formData.customer_contacted,
       })
 
-      if (error) throw error
       setSubmitted(true)
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.'

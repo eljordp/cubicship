@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { RefundRequest, RefundStatus } from '../lib/types'
-import { supabase } from '../lib/supabase'
+import { fetchRefundRequests, updateRefundRequest } from '../lib/api'
 
 interface ChecklistState {
   checklist_reason_documented: boolean
@@ -19,23 +19,17 @@ export function useRefundRequests() {
     setLoading(true)
     setError(null)
 
-    let query = supabase
-      .from('refund_requests')
-      .select('*')
-      .order('created_at', { ascending: false })
-
     const activeFilter = statusFilter ?? filter
-    if (activeFilter !== 'all') {
-      query = query.eq('status', activeFilter)
-    }
 
-    const { data, error: fetchError } = await query
-
-    if (fetchError) {
-      setError(fetchError.message)
+    try {
+      const data = await fetchRefundRequests(
+        activeFilter !== 'all' ? activeFilter : undefined
+      )
+      setRequests(data)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to fetch requests'
+      setError(message)
       setRequests([])
-    } else {
-      setRequests((data as RefundRequest[]) || [])
     }
 
     setLoading(false)
@@ -46,65 +40,34 @@ export function useRefundRequests() {
     fetchRequests()
   }, [fetchRequests])
 
-  // Real-time subscription
-  useEffect(() => {
-    const channel = supabase
-      .channel('refund_requests_changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'refund_requests' },
-        () => {
-          // Refetch on any change
-          fetchRequests()
-        }
-      )
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [fetchRequests])
-
   const approveRequest = async (
     id: string,
     notes: string,
     checklist: ChecklistState,
-    reviewerEmail: string
+    reviewerName: string
   ) => {
-    const { error: updateError } = await supabase
-      .from('refund_requests')
-      .update({
-        status: 'approved',
-        admin_notes: notes || null,
-        ...checklist,
-        reviewed_by: reviewerEmail,
-        reviewed_at: new Date().toISOString(),
-      })
-      .eq('id', id)
-
-    if (updateError) {
-      throw new Error(updateError.message)
-    }
+    await updateRefundRequest(id, {
+      status: 'approved',
+      admin_notes: notes || null,
+      ...checklist,
+      reviewed_by: reviewerName,
+      reviewed_at: new Date().toISOString(),
+    })
+    await fetchRequests()
   }
 
   const denyRequest = async (
     id: string,
     notes: string,
-    reviewerEmail: string
+    reviewerName: string
   ) => {
-    const { error: updateError } = await supabase
-      .from('refund_requests')
-      .update({
-        status: 'denied',
-        admin_notes: notes || null,
-        reviewed_by: reviewerEmail,
-        reviewed_at: new Date().toISOString(),
-      })
-      .eq('id', id)
-
-    if (updateError) {
-      throw new Error(updateError.message)
-    }
+    await updateRefundRequest(id, {
+      status: 'denied',
+      admin_notes: notes || null,
+      reviewed_by: reviewerName,
+      reviewed_at: new Date().toISOString(),
+    })
+    await fetchRequests()
   }
 
   // Count helpers

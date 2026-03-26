@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 src/App.css
 .vercel
+data/
+config/email.json
+config/auth.json
+.env

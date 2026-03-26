@@ -50,11 +50,11 @@ export default function AdminDashboardPage() {
       checklist_shipment_in_us: boolean
     }
   ) => {
-    await approveRequest(id, notes, checklist, user.email ?? 'unknown')
+    await approveRequest(id, notes, checklist, 'admin')
   }
 
   const handleDeny = async (id: string, notes: string) => {
-    await denyRequest(id, notes, user.email ?? 'unknown')
+    await denyRequest(id, notes, 'admin')
   }
 
   return (

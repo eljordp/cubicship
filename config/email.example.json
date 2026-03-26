@@ -1,0 +1,10 @@
+{
+  "host": "smtp.gmail.com",
+  "port": 587,
+  "secure": false,
+  "user": "your@email.com",
+  "pass": "your-app-password",
+  "from": "refunds@cubicship.com",
+  "admin_email": "admin@cubicship.com",
+  "app_url": "https://cubicship.com"
+}
