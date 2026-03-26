@@ -9,6 +9,10 @@ export interface RefundRequest {
   shipment_date: string
   return_reason: string
   left_us: boolean
+  agent_name: string
+  resend_attempted: boolean
+  resend_outcome: string
+  customer_contacted: boolean
   status: RefundStatus
   admin_notes: string | null
   checklist_reason_documented: boolean
@@ -29,4 +33,8 @@ export interface RefundFormData {
   shipment_date: string
   return_reason: string
   left_us: boolean
+  agent_name: string
+  resend_attempted: boolean
+  resend_outcome: string
+  customer_contacted: boolean
 }

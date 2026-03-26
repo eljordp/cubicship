@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabase'
 import FormProgressBar from './FormProgressBar'
 import StepCustomerInfo from './StepCustomerInfo'
 import StepShipmentDetails from './StepShipmentDetails'
+import StepAgentInfo from './StepAgentInfo'
 import StepUSCheck from './StepUSCheck'
 import StepAcknowledge from './StepAcknowledge'
 import SubmitConfirmation from './SubmitConfirmation'
@@ -17,6 +18,10 @@ const initialFormData: RefundFormData = {
   shipment_date: '',
   return_reason: '',
   left_us: false,
+  agent_name: '',
+  resend_attempted: false,
+  resend_outcome: '',
+  customer_contacted: false,
 }
 
 export default function RefundForm() {
@@ -25,6 +30,8 @@ export default function RefundForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [acknowledged, setAcknowledged] = useState(false)
   const [leftUsSelected, setLeftUsSelected] = useState<boolean | null>(null)
+  const [customerContactedSelected, setCustomerContactedSelected] = useState<boolean | null>(null)
+  const [resendAttemptedSelected, setResendAttemptedSelected] = useState<boolean | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -39,6 +46,15 @@ export default function RefundForm() {
 
     if (field === 'left_us') {
       setLeftUsSelected(value as boolean)
+    }
+    if (field === 'customer_contacted') {
+      setCustomerContactedSelected(value as boolean)
+    }
+    if (field === 'resend_attempted') {
+      setResendAttemptedSelected(value as boolean)
+      if (value === false) {
+        setFormData((prev) => ({ ...prev, resend_attempted: value as boolean, resend_outcome: '' }))
+      }
     }
   }
 
@@ -64,12 +80,25 @@ export default function RefundForm() {
     return Object.keys(newErrors).length === 0
   }
 
+  const validateStep3 = (): boolean => {
+    const newErrors: Record<string, string> = {}
+    if (!formData.agent_name.trim()) newErrors.agent_name = 'Agent name is required'
+    if (customerContactedSelected === null) newErrors.customer_contacted = 'Please indicate if the customer was contacted'
+    if (resendAttemptedSelected === null) newErrors.resend_attempted = 'Please indicate if a resend was attempted'
+    if (formData.resend_attempted && !formData.resend_outcome) {
+      newErrors.resend_outcome = 'Please select why the resend was not completed'
+    }
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleNext = () => {
     if (step === 1 && !validateStep1()) return
     if (step === 2 && !validateStep2()) return
-    if (step === 3 && leftUsSelected === null) return
-    if (step === 3 && leftUsSelected === true) return
-    setStep((s) => Math.min(s + 1, 4))
+    if (step === 3 && !validateStep3()) return
+    if (step === 4 && leftUsSelected === null) return
+    if (step === 4 && leftUsSelected === true) return
+    setStep((s) => Math.min(s + 1, 5))
   }
 
   const handleBack = () => {
@@ -90,6 +119,10 @@ export default function RefundForm() {
         shipment_date: formData.shipment_date,
         return_reason: formData.return_reason.trim(),
         left_us: false,
+        agent_name: formData.agent_name.trim(),
+        resend_attempted: formData.resend_attempted,
+        resend_outcome: formData.resend_outcome,
+        customer_contacted: formData.customer_contacted,
       })
 
       if (error) throw error
@@ -106,7 +139,7 @@ export default function RefundForm() {
     return <SubmitConfirmation email={formData.customer_email} />
   }
 
-  const canProceedStep3 = leftUsSelected === false
+  const canProceedStep4 = leftUsSelected === false
   const canSubmit = acknowledged && !submitting
 
   return (
@@ -121,9 +154,12 @@ export default function RefundForm() {
           <StepShipmentDetails data={formData} onChange={updateField} errors={errors} />
         )}
         {step === 3 && (
-          <StepUSCheck data={formData} onChange={updateField} leftUsSelected={leftUsSelected} />
+          <StepAgentInfo data={formData} onChange={updateField} errors={errors} />
         )}
         {step === 4 && (
+          <StepUSCheck data={formData} onChange={updateField} leftUsSelected={leftUsSelected} />
+        )}
+        {step === 5 && (
           <StepAcknowledge data={formData} acknowledged={acknowledged} onAcknowledge={setAcknowledged} />
         )}
       </div>
@@ -153,11 +189,11 @@ export default function RefundForm() {
           <div />
         )}
 
-        {step < 4 ? (
+        {step < 5 ? (
           <button
             type="button"
             onClick={handleNext}
-            disabled={step === 3 && !canProceedStep3}
+            disabled={step === 4 && !canProceedStep4}
             className="
               inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
               text-sm font-medium text-white

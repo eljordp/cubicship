@@ -1,114 +1,227 @@
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  Globe,
   Package,
-  Shield,
+  Search,
+  RefreshCw,
+  Truck,
   Clock,
+  Phone,
+  Mail,
+  Shield,
+  Globe,
   Headphones,
 } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
-/*  Hero                                                               */
+/*  Top Banner — DHL Partner identity strip                            */
 /* ------------------------------------------------------------------ */
-function Hero() {
+function TopBanner() {
   return (
-    <section className="relative bg-navy overflow-hidden">
-      {/* Subtle texture overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(74,144,217,0.12),transparent)]" />
+    <section className="bg-navy">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+          <div>
+            <div className="inline-flex items-center gap-2 bg-dhl-yellow px-3 py-1 rounded mb-4">
+              <Shield size={14} className="text-navy" />
+              <span className="text-xs font-bold text-navy uppercase tracking-wide">
+                DHL Premier Partner
+              </span>
+            </div>
+            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
+              International Shipping.<br />
+              Refund Processing.<br />
+              Done Right.
+            </h1>
+          </div>
+          <p className="text-white/50 text-sm sm:text-base max-w-sm leading-relaxed">
+            Cubic Ship is an authorized DHL Premier Partner handling shipments
+            to 220+ countries with full tracking and dedicated refund support.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      <div className="relative mx-auto max-w-6xl px-6 py-32 md:py-44">
-        <p className="text-primary font-semibold text-sm uppercase tracking-[0.2em] mb-6">
-          DHL Premier Partner
-        </p>
+/* ------------------------------------------------------------------ */
+/*  Quick Actions — Ship, Track, Refund                                */
+/* ------------------------------------------------------------------ */
+const actions = [
+  {
+    icon: Package,
+    title: 'Ship a Package',
+    description: 'Get rates and schedule a pickup through DHL\'s network.',
+    color: 'bg-dhl-yellow',
+    textColor: 'text-navy',
+    to: '/',
+  },
+  {
+    icon: Search,
+    title: 'Track a Shipment',
+    description: 'Real-time tracking for any DHL shipment worldwide.',
+    color: 'bg-navy',
+    textColor: 'text-white',
+    to: '/',
+  },
+  {
+    icon: RefreshCw,
+    title: 'Request a Refund',
+    description: 'Submit and track refund claims for returned or failed deliveries.',
+    color: 'bg-dhl-red',
+    textColor: 'text-white',
+    to: '/refund',
+  },
+];
 
-        <h1 className="font-serif text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] max-w-3xl">
-          Your Trusted Shipping&nbsp;Partner
-        </h1>
+function QuickActions() {
+  return (
+    <section className="bg-surface-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {actions.map((action) => {
+            const Icon = action.icon;
+            return (
+              <Link
+                key={action.title}
+                to={action.to}
+                className={`${action.color} ${action.textColor} p-6 sm:p-8 rounded-lg hover:opacity-90 transition-opacity group`}
+              >
+                <Icon size={28} className="mb-4" />
+                <h2 className="text-xl sm:text-2xl font-bold mb-2">
+                  {action.title}
+                </h2>
+                <p className={`text-sm leading-relaxed ${action.textColor === 'text-white' ? 'opacity-70' : 'opacity-60'}`}>
+                  {action.description}
+                </p>
+                <div className="mt-4 flex items-center gap-1 text-sm font-semibold">
+                  Get started
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-        <p className="mt-8 text-white/60 text-lg md:text-xl max-w-xl leading-relaxed">
-          Fast, reliable international shipping with the global reach of DHL.
-          We handle logistics so you can focus on what matters.
-        </p>
+/* ------------------------------------------------------------------ */
+/*  Refund Process — Vertical timeline                                 */
+/* ------------------------------------------------------------------ */
+const refundSteps = [
+  {
+    number: '01',
+    title: 'Shipment is Returned',
+    description: 'A package is returned to sender due to delivery failure, refused delivery, or incorrect address.',
+  },
+  {
+    number: '02',
+    title: 'Agent Contacts Customer Relations',
+    description: 'Our shipping agent reaches out to DHL Customer Relations to investigate the cause and document the issue.',
+  },
+  {
+    number: '03',
+    title: 'We Contact You',
+    description: 'We reach out to apologize for the inconvenience and attempt to arrange a resend of the shipment.',
+  },
+  {
+    number: '04',
+    title: 'Refund Request Submitted',
+    description: 'If a resend is not possible, you submit a refund request through our portal with your shipment details.',
+  },
+  {
+    number: '05',
+    title: 'Admin Review',
+    description: 'Our admin team reviews your claim within 48-72 business hours. You can track the status in real time.',
+  },
+  {
+    number: '06',
+    title: 'Refund Issued',
+    description: 'Once approved, the refund is processed and issued back to your original payment method.',
+  },
+];
 
-        <div className="mt-12 flex flex-wrap gap-4">
+function RefundProcess() {
+  return (
+    <section className="bg-surface">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-14 sm:py-20">
+        <div className="mb-10">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+            How We Process Refunds
+          </h2>
+          <p className="text-text-secondary text-sm sm:text-base mt-2 max-w-xl">
+            A transparent, step-by-step process so you always know where your claim stands.
+          </p>
+        </div>
+
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-5 top-0 bottom-0 w-px bg-border hidden sm:block" />
+
+          <div className="space-y-0">
+            {refundSteps.map((step, i) => (
+              <div key={step.number} className="relative flex gap-6 sm:gap-8 group">
+                {/* Step number */}
+                <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-dhl-red flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">{step.number}</span>
+                </div>
+
+                {/* Content */}
+                <div className={`pb-8 ${i === refundSteps.length - 1 ? 'pb-0' : ''}`}>
+                  <h3 className="text-base sm:text-lg font-bold text-navy">
+                    {step.title}
+                  </h3>
+                  <p className="text-text-secondary text-sm leading-relaxed mt-1 max-w-lg">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10">
           <Link
             to="/refund"
-            className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-sm"
+            className="inline-flex items-center gap-2 bg-dhl-red hover:bg-dhl-red/90 text-white font-bold px-6 py-3 rounded transition-colors text-sm"
           >
-            Request a Refund
+            Submit a Refund Request
             <ArrowRight size={16} />
           </Link>
         </div>
       </div>
-
-      {/* Bottom edge fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-surface to-transparent" />
     </section>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/*  Services — editorial stacked blocks, NOT cards                     */
+/*  Service Area — Bold stats band                                     */
 /* ------------------------------------------------------------------ */
-const services = [
-  {
-    icon: Globe,
-    title: 'International Shipping',
-    description:
-      'Reach 220+ countries and territories through DHL\'s world-class logistics network. Competitive rates, dependable timelines, door-to-door service.',
-  },
-  {
-    icon: Package,
-    title: 'Package Tracking',
-    description:
-      'Real-time visibility from pickup to delivery. Know exactly where your shipment is at every stage with detailed status updates and notifications.',
-  },
-  {
-    icon: Shield,
-    title: 'Refund Processing',
-    description:
-      'Service issues happen. Our dedicated team processes refund claims quickly and transparently so you\'re never left waiting.',
-  },
+const capabilities = [
+  { icon: Globe, value: '220+', label: 'Countries & Territories' },
+  { icon: Truck, value: 'Real-Time', label: 'Shipment Tracking' },
+  { icon: Headphones, value: 'Dedicated', label: 'Support Team' },
+  { icon: Clock, value: '48-72 hrs', label: 'Refund Processing' },
 ];
 
-function Services() {
+function ServiceArea() {
   return (
-    <section className="py-28 md:py-36">
-      <div className="mx-auto max-w-6xl px-6">
-        <p className="text-primary font-semibold text-sm uppercase tracking-[0.2em] mb-4">
-          What We Do
-        </p>
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-navy max-w-2xl leading-tight">
-          Shipping made simple, from start to finish
-        </h2>
-
-        <div className="mt-20 space-y-20 md:space-y-0 md:grid md:grid-cols-1 md:gap-0">
-          {services.map((service, i) => {
-            const Icon = service.icon;
-            const isEven = i % 2 === 1;
-
+    <section className="bg-dhl-yellow">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-6">
+          {capabilities.map((cap) => {
+            const Icon = cap.icon;
             return (
-              <div
-                key={service.title}
-                className={`flex flex-col md:flex-row items-start gap-8 md:gap-16 py-14 ${
-                  i !== services.length - 1 ? 'border-b border-border' : ''
-                } ${isEven ? 'md:flex-row-reverse' : ''}`}
-              >
-                {/* Icon area */}
-                <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-navy/5 flex items-center justify-center">
-                  <Icon size={26} className="text-primary" />
-                </div>
-
-                {/* Text */}
-                <div className="max-w-lg">
-                  <h3 className="font-serif text-2xl md:text-3xl text-navy mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-text-secondary leading-relaxed text-base md:text-lg">
-                    {service.description}
-                  </p>
-                </div>
+              <div key={cap.label} className="text-center">
+                <Icon size={24} className="text-navy mx-auto mb-3" />
+                <p className="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+                  {cap.value}
+                </p>
+                <p className="text-sm font-semibold text-navy/60 mt-1">
+                  {cap.label}
+                </p>
               </div>
             );
           })}
@@ -119,92 +232,37 @@ function Services() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Trust — horizontal stats strip on dark band                        */
+/*  Contact / Support Band                                             */
 /* ------------------------------------------------------------------ */
-const stats = [
-  {
-    icon: Shield,
-    label: 'DHL Premier Partner',
-    detail: 'Authorized and certified',
-  },
-  {
-    icon: Clock,
-    label: 'Fast Processing',
-    detail: 'Claims reviewed in 24-48 hrs',
-  },
-  {
-    icon: Headphones,
-    label: '24/7 Support',
-    detail: 'Real people, real answers',
-  },
-];
-
-function Trust() {
+function ContactBand() {
   return (
     <section className="bg-navy">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-28">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-8">
-          {stats.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <div key={stat.label} className="text-center md:text-left">
-                <Icon
-                  size={28}
-                  className="text-primary mx-auto md:mx-0 mb-5"
-                />
-                <p className="font-serif text-white text-xl md:text-2xl mb-2">
-                  {stat.label}
-                </p>
-                <p className="text-white/50 text-sm leading-relaxed">
-                  {stat.detail}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Contact                                                            */
-/* ------------------------------------------------------------------ */
-function Contact() {
-  return (
-    <section className="py-28 md:py-36">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="max-w-2xl">
-          <p className="text-primary font-semibold text-sm uppercase tracking-[0.2em] mb-4">
-            Get in Touch
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-navy leading-tight mb-8">
-            Questions? We're here to&nbsp;help.
-          </h2>
-          <p className="text-text-secondary text-lg leading-relaxed mb-10">
-            Whether you need a shipping quote, have a question about a delivery,
-            or want to file a refund request, our team is ready to assist.
-          </p>
-
-          <div className="space-y-4 text-base text-text-secondary">
-            <p>
-              <span className="font-medium text-navy">Email:</span>{' '}
-              <a
-                href="mailto:info@cubicship.com"
-                className="text-primary hover:underline"
-              >
-                info@cubicship.com
-              </a>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-14">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+              Need Help? Contact Our Support Team.
+            </h2>
+            <p className="text-white/50 text-sm mt-1">
+              Available Monday through Friday, 8:00 AM - 6:00 PM. Saturday 9:00 AM - 1:00 PM.
             </p>
-            <p>
-              <span className="font-medium text-navy">Phone:</span>{' '}
-              <a
-                href="tel:+18001234567"
-                className="hover:text-primary transition-colors"
-              >
-                1-800-123-4567
-              </a>
-            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+            <a
+              href="tel:+18001234567"
+              className="flex items-center gap-2 text-white font-semibold text-sm hover:text-dhl-yellow transition-colors"
+            >
+              <Phone size={16} className="text-dhl-yellow" />
+              1-800-123-4567
+            </a>
+            <a
+              href="mailto:info@cubicship.com"
+              className="flex items-center gap-2 text-white font-semibold text-sm hover:text-dhl-yellow transition-colors"
+            >
+              <Mail size={16} className="text-dhl-yellow" />
+              info@cubicship.com
+            </a>
           </div>
         </div>
       </div>
@@ -218,10 +276,11 @@ function Contact() {
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <Services />
-      <Trust />
-      <Contact />
+      <TopBanner />
+      <QuickActions />
+      <RefundProcess />
+      <ServiceArea />
+      <ContactBand />
     </>
   );
 }

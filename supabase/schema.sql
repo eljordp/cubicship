@@ -16,6 +16,12 @@ CREATE TABLE refund_requests (
   return_reason TEXT NOT NULL,
   left_us BOOLEAN NOT NULL DEFAULT FALSE,
 
+  -- Agent workflow info
+  agent_name TEXT NOT NULL DEFAULT '',
+  resend_attempted BOOLEAN NOT NULL DEFAULT FALSE,
+  resend_outcome TEXT DEFAULT '',
+  customer_contacted BOOLEAN NOT NULL DEFAULT FALSE,
+
   -- Status
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'denied')),
   admin_notes TEXT,

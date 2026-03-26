@@ -1,4 +1,4 @@
-import { User, Package, Calendar, FileText } from 'lucide-react'
+import { User, Package, Calendar, FileText, UserCheck, Phone, RefreshCw } from 'lucide-react'
 import { APPROVAL_TIMEFRAME } from '../../lib/constants'
 import type { RefundFormData } from '../../lib/types'
 
@@ -6,6 +6,17 @@ interface StepAcknowledgeProps {
   data: RefundFormData
   acknowledged: boolean
   onAcknowledge: (value: boolean) => void
+}
+
+function formatResendOutcome(outcome: string): string {
+  switch (outcome) {
+    case 'customer_declined':
+      return 'Customer declined the resend'
+    case 'not_possible':
+      return 'Resend was not possible'
+    default:
+      return 'N/A'
+  }
 }
 
 export default function StepAcknowledge({ data, acknowledged, onAcknowledge }: StepAcknowledgeProps) {
@@ -64,6 +75,49 @@ export default function StepAcknowledge({ data, acknowledged, onAcknowledge }: S
             <p className="text-navy text-sm leading-relaxed">{data.return_reason}</p>
           </div>
         </div>
+
+        <hr className="border-border" />
+
+        <div className="flex items-start gap-3">
+          <UserCheck className="w-4 h-4 text-text-secondary mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="text-xs text-text-secondary uppercase tracking-wide font-medium">Agent</p>
+            <p className="text-navy font-medium">{data.agent_name}</p>
+          </div>
+        </div>
+
+        <hr className="border-border" />
+
+        <div className="flex items-start gap-3">
+          <Phone className="w-4 h-4 text-text-secondary mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="text-xs text-text-secondary uppercase tracking-wide font-medium">Customer Contacted</p>
+            <p className="text-navy font-medium">{data.customer_contacted ? 'Yes' : 'No'}</p>
+          </div>
+        </div>
+
+        <hr className="border-border" />
+
+        <div className="flex items-start gap-3">
+          <RefreshCw className="w-4 h-4 text-text-secondary mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="text-xs text-text-secondary uppercase tracking-wide font-medium">Resend Attempted</p>
+            <p className="text-navy font-medium">{data.resend_attempted ? 'Yes' : 'No'}</p>
+          </div>
+        </div>
+
+        {data.resend_attempted && data.resend_outcome && (
+          <>
+            <hr className="border-border" />
+            <div className="flex items-start gap-3">
+              <RefreshCw className="w-4 h-4 text-text-secondary mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-xs text-text-secondary uppercase tracking-wide font-medium">Resend Outcome</p>
+                <p className="text-navy font-medium">{formatResendOutcome(data.resend_outcome)}</p>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       <label className="flex items-start gap-3 cursor-pointer p-4 rounded-xl border border-border bg-white hover:border-primary/30 transition-colors">

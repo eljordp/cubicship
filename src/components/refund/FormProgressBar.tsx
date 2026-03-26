@@ -2,9 +2,10 @@ import { CheckCircle } from 'lucide-react'
 
 const steps = [
   { number: 1, label: 'Your Info' },
-  { number: 2, label: 'Shipment Details' },
-  { number: 3, label: 'Verification' },
-  { number: 4, label: 'Review & Submit' },
+  { number: 2, label: 'Shipment' },
+  { number: 3, label: 'Agent Info' },
+  { number: 4, label: 'Verification' },
+  { number: 5, label: 'Review' },
 ]
 
 interface FormProgressBarProps {

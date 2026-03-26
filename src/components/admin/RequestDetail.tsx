@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { User, Package, Clock, FileText, AlertCircle } from 'lucide-react'
+import { User, Package, Clock, FileText, AlertCircle, UserCheck, Phone, RefreshCw } from 'lucide-react'
 import type { RefundRequest } from '../../lib/types'
 import AdminChecklist from './AdminChecklist'
 import StatusBadge from './StatusBadge'
@@ -141,6 +141,44 @@ export default function RequestDetail({ request, onApprove, onDeny }: RequestDet
           <p className="text-sm text-[var(--color-text)] bg-gray-50 rounded-lg p-4 border border-[var(--color-border)]">
             {request.return_reason}
           </p>
+        </div>
+
+        {/* Agent Workflow Info */}
+        <div>
+          <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)] uppercase tracking-wide mb-3">
+            <UserCheck className="w-4 h-4" />
+            Agent Workflow
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <p className="text-xs text-[var(--color-text-secondary)] mb-0.5">Agent Name</p>
+              <p className="text-sm font-medium">{request.agent_name || 'N/A'}</p>
+            </div>
+            <div>
+              <p className="text-xs text-[var(--color-text-secondary)] mb-0.5">Customer Contacted</p>
+              <p className={`text-sm font-medium ${request.customer_contacted ? 'text-green-600' : 'text-red-600'}`}>
+                {request.customer_contacted ? 'Yes — apologized' : 'No'}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-[var(--color-text-secondary)] mb-0.5">Resend Attempted</p>
+              <p className={`text-sm font-medium ${request.resend_attempted ? 'text-green-600' : 'text-red-600'}`}>
+                {request.resend_attempted ? 'Yes' : 'No'}
+              </p>
+            </div>
+            {request.resend_attempted && request.resend_outcome && (
+              <div>
+                <p className="text-xs text-[var(--color-text-secondary)] mb-0.5">Resend Outcome</p>
+                <p className="text-sm font-medium">
+                  {request.resend_outcome === 'customer_declined'
+                    ? 'Customer declined resend'
+                    : request.resend_outcome === 'not_possible'
+                    ? 'Resend not possible'
+                    : request.resend_outcome}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Checklist */}
