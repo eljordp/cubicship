@@ -4,8 +4,7 @@ import { Menu, X } from 'lucide-react';
 import clsx from 'clsx';
 
 const navLinks = [
-  { label: 'Ship', to: '/' },
-  { label: 'Track', to: '/' },
+  { label: 'Home', to: '/' },
   { label: 'Refund Request', to: '/refund', highlight: true },
   { label: 'Support', to: '/' },
   { label: 'Admin', to: '/admin' },
@@ -16,13 +15,13 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50">
-      {/* Top DHL partner bar */}
-      <div className="bg-dhl-yellow">
+      {/* Top Cubic Ship partner bar */}
+      <div className="bg-navy">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between h-8">
-          <span className="text-xs font-bold text-navy tracking-wide uppercase">
-            Authorized DHL Premier Partner
+          <span className="text-xs font-bold text-cs-orange tracking-wide uppercase">
+            DHL Premier Partner
           </span>
-          <span className="hidden sm:block text-xs font-medium text-navy/70">
+          <span className="hidden sm:block text-xs font-medium text-white/50">
             Ship to 220+ Countries
           </span>
         </div>
@@ -36,13 +35,13 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="Cubic Ship logo"
-              className="h-9 w-auto"
+              className="h-10 w-auto"
             />
             <div className="flex flex-col leading-tight">
               <span className="text-lg font-extrabold text-navy tracking-tight">
                 Cubic Ship
               </span>
-              <span className="text-[10px] font-semibold text-dhl-red uppercase tracking-widest">
+              <span className="text-[10px] font-semibold text-cs-green uppercase tracking-widest">
                 DHL Partner
               </span>
             </div>
@@ -57,7 +56,7 @@ export default function Navbar() {
                   className={clsx(
                     'text-sm font-semibold transition-colors duration-150',
                     link.highlight
-                      ? 'text-dhl-red hover:text-dhl-red/80'
+                      ? 'text-cs-orange hover:text-cs-orange/80'
                       : 'text-navy/70 hover:text-navy'
                   )}
                 >
@@ -94,7 +93,7 @@ export default function Navbar() {
                 className={clsx(
                   'block text-base font-semibold transition-colors py-1',
                   link.highlight
-                    ? 'text-dhl-red'
+                    ? 'text-cs-orange'
                     : 'text-navy/70 hover:text-navy'
                 )}
               >

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
-/*  Top Banner — DHL Partner identity strip                            */
+/*  Top Banner                                                         */
 /* ------------------------------------------------------------------ */
 function TopBanner() {
   return (
@@ -22,9 +22,9 @@ function TopBanner() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 bg-dhl-yellow px-3 py-1 rounded mb-4">
-              <Shield size={14} className="text-navy" />
-              <span className="text-xs font-bold text-navy uppercase tracking-wide">
+            <div className="inline-flex items-center gap-2 bg-cs-orange px-3 py-1 rounded mb-4">
+              <Shield size={14} className="text-white" />
+              <span className="text-xs font-bold text-white uppercase tracking-wide">
                 DHL Premier Partner
               </span>
             </div>
@@ -52,8 +52,8 @@ const actions = [
     icon: Package,
     title: 'Ship a Package',
     description: 'Get rates and schedule a pickup through DHL\'s network.',
-    color: 'bg-dhl-yellow',
-    textColor: 'text-navy',
+    color: 'bg-cs-blue',
+    textColor: 'text-white',
     to: '/',
   },
   {
@@ -68,7 +68,7 @@ const actions = [
     icon: RefreshCw,
     title: 'Request a Refund',
     description: 'Submit and track refund claims for returned or failed deliveries.',
-    color: 'bg-dhl-red',
+    color: 'bg-cs-orange',
     textColor: 'text-white',
     to: '/refund',
   },
@@ -91,7 +91,7 @@ function QuickActions() {
                 <h2 className="text-xl sm:text-2xl font-bold mb-2">
                   {action.title}
                 </h2>
-                <p className={`text-sm leading-relaxed ${action.textColor === 'text-white' ? 'opacity-70' : 'opacity-60'}`}>
+                <p className="text-sm leading-relaxed opacity-70">
                   {action.description}
                 </p>
                 <div className="mt-4 flex items-center gap-1 text-sm font-semibold">
@@ -164,7 +164,7 @@ function RefundProcess() {
             {refundSteps.map((step, i) => (
               <div key={step.number} className="relative flex gap-6 sm:gap-8 group">
                 {/* Step number */}
-                <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-dhl-red flex items-center justify-center">
+                <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-cs-orange flex items-center justify-center">
                   <span className="text-white text-xs font-bold">{step.number}</span>
                 </div>
 
@@ -185,7 +185,7 @@ function RefundProcess() {
         <div className="mt-10">
           <Link
             to="/refund"
-            className="inline-flex items-center gap-2 bg-dhl-red hover:bg-dhl-red/90 text-white font-bold px-6 py-3 rounded transition-colors text-sm"
+            className="inline-flex items-center gap-2 bg-cs-orange hover:bg-cs-orange/90 text-white font-bold px-6 py-3 rounded transition-colors text-sm"
           >
             Submit a Refund Request
             <ArrowRight size={16} />
@@ -208,18 +208,18 @@ const capabilities = [
 
 function ServiceArea() {
   return (
-    <section className="bg-dhl-yellow">
+    <section className="bg-cs-green">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-6">
           {capabilities.map((cap) => {
             const Icon = cap.icon;
             return (
               <div key={cap.label} className="text-center">
-                <Icon size={24} className="text-navy mx-auto mb-3" />
-                <p className="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+                <Icon size={24} className="text-white mx-auto mb-3" />
+                <p className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                   {cap.value}
                 </p>
-                <p className="text-sm font-semibold text-navy/60 mt-1">
+                <p className="text-sm font-semibold text-white/70 mt-1">
                   {cap.label}
                 </p>
               </div>
@@ -251,16 +251,16 @@ function ContactBand() {
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
             <a
               href="tel:+18001234567"
-              className="flex items-center gap-2 text-white font-semibold text-sm hover:text-dhl-yellow transition-colors"
+              className="flex items-center gap-2 text-white font-semibold text-sm hover:text-cs-orange transition-colors"
             >
-              <Phone size={16} className="text-dhl-yellow" />
+              <Phone size={16} className="text-cs-orange" />
               1-800-123-4567
             </a>
             <a
               href="mailto:info@cubicship.com"
-              className="flex items-center gap-2 text-white font-semibold text-sm hover:text-dhl-yellow transition-colors"
+              className="flex items-center gap-2 text-white font-semibold text-sm hover:text-cs-orange transition-colors"
             >
-              <Mail size={16} className="text-dhl-yellow" />
+              <Mail size={16} className="text-cs-orange" />
               info@cubicship.com
             </a>
           </div>

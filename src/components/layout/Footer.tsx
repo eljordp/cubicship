@@ -25,8 +25,8 @@ export default function Footer() {
                 Cubic Ship
               </span>
             </div>
-            <div className="inline-block bg-dhl-yellow/15 border border-dhl-yellow/30 rounded px-3 py-1">
-              <span className="text-xs font-bold text-dhl-yellow uppercase tracking-wide">
+            <div className="inline-block bg-cs-orange/15 border border-dhl-yellow/30 rounded px-3 py-1">
+              <span className="text-xs font-bold text-cs-orange uppercase tracking-wide">
                 Authorized DHL Premier Partner
               </span>
             </div>
@@ -65,18 +65,18 @@ export default function Footer() {
                 href="mailto:info@cubicship.com"
                 className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
               >
-                <Mail size={14} className="text-dhl-yellow" />
+                <Mail size={14} className="text-cs-orange" />
                 info@cubicship.com
               </a>
               <a
                 href="tel:+18001234567"
                 className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
               >
-                <Phone size={14} className="text-dhl-yellow" />
+                <Phone size={14} className="text-cs-orange" />
                 1-800-123-4567
               </a>
               <div className="flex items-start gap-2 text-white/60">
-                <Clock size={14} className="text-dhl-yellow mt-0.5" />
+                <Clock size={14} className="text-cs-orange mt-0.5" />
                 <div>
                   <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
                   <p>Sat: 9:00 AM - 1:00 PM</p>

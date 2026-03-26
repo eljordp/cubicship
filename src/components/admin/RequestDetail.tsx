@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { User, Package, Clock, FileText, AlertCircle, UserCheck, Phone, RefreshCw } from 'lucide-react'
+import { User, Package, Clock, FileText, AlertCircle, UserCheck } from 'lucide-react'
 import type { RefundRequest } from '../../lib/types'
 import AdminChecklist from './AdminChecklist'
 import StatusBadge from './StatusBadge'
