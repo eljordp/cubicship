@@ -19,8 +19,6 @@ const initialFormData: RefundFormData = {
   return_reason: '',
   left_us: false,
   agent_name: '',
-  resend_attempted: false,
-  resend_outcome: '',
   customer_contacted: false,
 }
 
@@ -31,7 +29,6 @@ export default function RefundForm() {
   const [acknowledged, setAcknowledged] = useState(false)
   const [leftUsSelected, setLeftUsSelected] = useState<boolean | null>(null)
   const [customerContactedSelected, setCustomerContactedSelected] = useState<boolean | null>(null)
-  const [resendAttemptedSelected, setResendAttemptedSelected] = useState<boolean | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -49,12 +46,6 @@ export default function RefundForm() {
     }
     if (field === 'customer_contacted') {
       setCustomerContactedSelected(value as boolean)
-    }
-    if (field === 'resend_attempted') {
-      setResendAttemptedSelected(value as boolean)
-      if (value === false) {
-        setFormData((prev) => ({ ...prev, resend_attempted: value as boolean, resend_outcome: '' }))
-      }
     }
   }
 
@@ -84,10 +75,6 @@ export default function RefundForm() {
     const newErrors: Record<string, string> = {}
     if (!formData.agent_name.trim()) newErrors.agent_name = 'Agent name is required'
     if (customerContactedSelected === null) newErrors.customer_contacted = 'Please indicate if the customer was contacted'
-    if (resendAttemptedSelected === null) newErrors.resend_attempted = 'Please indicate if a resend was attempted'
-    if (formData.resend_attempted && !formData.resend_outcome) {
-      newErrors.resend_outcome = 'Please select why the resend was not completed'
-    }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -120,8 +107,6 @@ export default function RefundForm() {
         return_reason: formData.return_reason.trim(),
         left_us: false,
         agent_name: formData.agent_name.trim(),
-        resend_attempted: formData.resend_attempted,
-        resend_outcome: formData.resend_outcome,
         customer_contacted: formData.customer_contacted,
       })
 

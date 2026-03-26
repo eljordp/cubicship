@@ -10,8 +10,6 @@ export interface RefundRequest {
   return_reason: string
   left_us: boolean
   agent_name: string
-  resend_attempted: boolean
-  resend_outcome: string
   customer_contacted: boolean
   status: RefundStatus
   admin_notes: string | null
@@ -34,7 +32,5 @@ export interface RefundFormData {
   return_reason: string
   left_us: boolean
   agent_name: string
-  resend_attempted: boolean
-  resend_outcome: string
   customer_contacted: boolean
 }

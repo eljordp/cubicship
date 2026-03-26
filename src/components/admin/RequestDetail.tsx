@@ -160,24 +160,6 @@ export default function RequestDetail({ request, onApprove, onDeny }: RequestDet
                 {request.customer_contacted ? 'Yes — apologized' : 'No'}
               </p>
             </div>
-            <div>
-              <p className="text-xs text-[var(--color-text-secondary)] mb-0.5">Resend Attempted</p>
-              <p className={`text-sm font-medium ${request.resend_attempted ? 'text-green-600' : 'text-red-600'}`}>
-                {request.resend_attempted ? 'Yes' : 'No'}
-              </p>
-            </div>
-            {request.resend_attempted && request.resend_outcome && (
-              <div>
-                <p className="text-xs text-[var(--color-text-secondary)] mb-0.5">Resend Outcome</p>
-                <p className="text-sm font-medium">
-                  {request.resend_outcome === 'customer_declined'
-                    ? 'Customer declined resend'
-                    : request.resend_outcome === 'not_possible'
-                    ? 'Resend not possible'
-                    : request.resend_outcome}
-                </p>
-              </div>
-            )}
           </div>
         </div>
 

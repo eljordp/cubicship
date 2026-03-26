@@ -18,8 +18,6 @@ CREATE TABLE refund_requests (
 
   -- Agent workflow info
   agent_name TEXT NOT NULL DEFAULT '',
-  resend_attempted BOOLEAN NOT NULL DEFAULT FALSE,
-  resend_outcome TEXT DEFAULT '',
   customer_contacted BOOLEAN NOT NULL DEFAULT FALSE,
 
   -- Status

@@ -124,12 +124,12 @@ const refundSteps = [
   {
     number: '03',
     title: 'We Contact You',
-    description: 'We reach out to apologize for the inconvenience and attempt to arrange a resend of the shipment.',
+    description: 'We reach out to apologize for the inconvenience and walk you through the refund process.',
   },
   {
     number: '04',
     title: 'Refund Request Submitted',
-    description: 'If a resend is not possible, you submit a refund request through our portal with your shipment details.',
+    description: 'You submit a refund request through our portal with your shipment details.',
   },
   {
     number: '05',
